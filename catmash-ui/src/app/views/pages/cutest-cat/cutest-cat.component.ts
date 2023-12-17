@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Cat } from 'src/app/model/cat';
+import { CatService } from 'src/app/services/cat-service.service';
 
 @Component({
   selector: 'app-cutest-cat',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CutestCatComponent implements OnInit {
 
-  constructor() { }
+  constructor(private catService : CatService) { }
+
+  cats : Array<Cat> = [];
 
   ngOnInit(): void {
+    this.getCutestCats();
+  }
+
+  getCutestCats() {
+    this.catService
+    .getTop5CutestCats()
+    .subscribe((response: Array<Cat>) => {
+          this.cats = response;
+    });
   }
 
 }

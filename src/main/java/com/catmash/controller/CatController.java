@@ -29,7 +29,7 @@ public class CatController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "500", description = "Internal server error") })
     @PutMapping("/cats/{id}")
-    public ResponseEntity<Cat> voteForCatWithId(@PathVariable String id){
+    public ResponseEntity<Cat> voteForCatWithId(@PathVariable(value = "id")  String id, @RequestBody String idToModify){
         var cat = catService.voteForCatWithId(id);
         return ResponseEntity.ok(catMapper.mapToDto(cat));
     }
@@ -42,6 +42,17 @@ public class CatController {
     @GetMapping("/cats")
     public ResponseEntity<List<Cat>> listCats(){
         var list = catMapper.map(catService.listTop5CuttestCats());
+        return ResponseEntity.ok(list);
+    }
+
+    @Operation(summary = "List all cats", description = "List all cats")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List returned successfully"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "500", description = "Internal server error") })
+    @GetMapping("/cats/all")
+    public ResponseEntity<List<Cat>> list(){
+        var list = catMapper.map(catService.list());
         return ResponseEntity.ok(list);
     }
 }

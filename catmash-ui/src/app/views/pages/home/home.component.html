@@ -1,1 +1,27 @@
-<p>home works!</p>
+<br />
+<h2 align="center">Cats with score</h2>
+<br />
+<div class="container">
+  <div class="card m-5 p-3">
+      <div class="card-body">
+        <table class="table table-striped" >
+          <thead>
+              <tr>
+                  <th>Cat</th>
+                  <th>Score</th>
+                  <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let c of cats">
+                  <td><img [src]= "c.url" height="50px" width="50px"></td>
+                  <td>{{ c.score }}</td>
+                  <td><button (click)="voteForCat(c.id)"  >Vote</button></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+
+  </div>
+</div>
+

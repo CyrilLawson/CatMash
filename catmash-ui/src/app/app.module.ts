@@ -7,6 +7,7 @@ import { HeaderComponent } from './views/base/header/header.component';
 import { HomeComponent } from './views/pages/home/home.component';
 import { CutestCatComponent } from './views/pages/cutest-cat/cutest-cat.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+    HttpClientModule,
     NgbModule
 
   ],

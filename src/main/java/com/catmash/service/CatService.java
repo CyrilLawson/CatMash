@@ -9,4 +9,6 @@ public interface CatService {
     Cat voteForCatWithId(String id);
 
     List<Cat> listTop5CuttestCats();
+
+    List<Cat> list();
 }

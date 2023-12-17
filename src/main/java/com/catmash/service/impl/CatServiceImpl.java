@@ -29,12 +29,9 @@ public class CatServiceImpl implements CatService {
     Resource resourceFile;
     private final CatRepository repository;
 
-    private ObjectMapper objectMapper;
-
     @PostConstruct
     public void populateDatabase() throws IOException {
         if (repository.findAll().isEmpty()) {
-            this.objectMapper = new ObjectMapper();
             InputStream is = new FileInputStream(resourceFile.getFile());
             String jsonTxt = IOUtils.toString(is);
 
@@ -50,7 +47,10 @@ public class CatServiceImpl implements CatService {
     @Override
     public Cat voteForCatWithId(String id) {
         Optional<Cat> catentity = repository.findById(id);
-        catentity.ifPresentOrElse(t -> t.setScore(t.getScore() + 1),
+        catentity.ifPresentOrElse(t -> {
+                    t.setScore(t.getScore() + 1);
+                    repository.save(t);
+                },
                 () -> new EntityNotFoundException(Cat.class.getSimpleName(), id));
 
         return catentity.get();
@@ -61,4 +61,11 @@ public class CatServiceImpl implements CatService {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "score"))
                 .stream().limit(5).toList();
     }
+
+    @Override
+    public List<Cat> list() {
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "score"));
+    }
+
+
 }
