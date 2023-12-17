@@ -4,9 +4,9 @@ import com.catmash.entity.Cat;
 
 import java.util.List;
 
-public interface CarService {
+public interface CatService {
 
     Cat voteForCatWithId(String id);
 
-    List<Cat> listAllCats();
+    List<Cat> listTop5CuttestCats();
 }
