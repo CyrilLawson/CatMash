@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -28,9 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestPropertySource(locations = "classpath:application-test.properties")
 class CatControllerTests {
 
-    static final String URL = "/api/v1/cats/";
     private MockMvc mockMvc;
 
     @MockBean
@@ -56,6 +57,7 @@ class CatControllerTests {
                 .willReturn(new com.catmash.model.Cat("ID", "URL", 2));
 
         mockMvc.perform(put("/api/v1/cats/{id}", "ID")
+                        .content("ID")
                         .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(new Cat("ID", "URL", 2))))
                 .andDo(MockMvcResultHandlers.print())
